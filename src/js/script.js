@@ -30,44 +30,53 @@
   // Init function
   function init() {
 
-    // Call render function
+    // Render books
     render();
+
+    // Initialize actions
+    initActions();
   }
 
-  // Call init
   init();
 
-  // 1. Empty array
+
+  // Empty favorite books array
   const favoriteBooks = [];
 
-  // 2. Function initActions
+  // Initialize actions
   function initActions() {
 
-    // 3. Reference to books images
-    const images = document.querySelectorAll('.book__image');
+    // Event listener
+    booksList.addEventListener('dblclick', function(event) {
 
-    // 4. Loop through images
-    for(let image of images) {
+      // Check clicked element
+      if(event.target.offsetParent.classList.contains('book__image')) {
 
-      // 5. Add event listener
-      image.addEventListener('dblclick', function(event) {
+        // Get book id
+        const bookId = event.target.offsetParent.dataset.id;
 
-        // 6. Prevent default
-        event.preventDefault();
+        // Check if already favorite
+        const alreadyFavorite = favoriteBooks.includes(bookId);
 
-        // 7. Check if image has class favorite
-        this.classList.add('favorite');
+        if(alreadyFavorite) {
 
-        // 8. Get id from data-id attribute
-        const bookId = this.dataset.id;
+          // Remove favorite
+          event.target.offsetParent.classList.remove('favorite');
 
-        // 9. Check if book is not in favoriteBooks array
-        favoriteBooks.push(bookId);
-      });
-    }
+          // Remove bookId from array
+          const index = favoriteBooks.indexOf(bookId);
+          favoriteBooks.splice(index, 1);
+
+          // Other remove logic
+        } else {
+
+          // Add favorite
+          event.target.offsetParent.classList.add('favorite');
+
+          // Add bookId to array
+          favoriteBooks.push(bookId);
+        }
+      }
+    });
   }
-
-  // 10. Call initActions function
-  initActions();
-
 }
