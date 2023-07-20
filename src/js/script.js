@@ -79,4 +79,32 @@
       }
     });
   }
+  
+  // Filter object
+  const filters = [];
+
+  // Get form
+  const form = document.querySelector('.filters');
+
+  // Add event listener
+  form.addEventListener('click', function(event) {
+
+    // Check if clicked element is checkbox
+    if(event.target.tagName === 'INPUT' &&
+      event.target.type === 'checkbox' &&
+      event.target.name === 'filter') {
+
+      // Get value
+      const value = event.target.value;
+
+      // Check if checked
+      if(event.target.checked) {
+        filters.push(value);
+      } else {
+        const index = filters.indexOf(value);
+        filters.splice(index, 1);
+      }
+    }
+  });
+
 }
