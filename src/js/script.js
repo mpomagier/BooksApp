@@ -79,7 +79,7 @@
       }
     });
   }
-  
+
   // Filter object
   const filters = [];
 
@@ -104,6 +104,55 @@
         const index = filters.indexOf(value);
         filters.splice(index, 1);
       }
+    }
+  });
+
+  function filterBooks() {
+
+    // Loop through books
+    for(let book of dataSource.books) {
+
+      // Variable to check if book should be hidden
+      let shouldBeHidden = false;
+
+      // Loop through filters
+      for (const filter of filters) {
+
+        // Check if book does NOT have given filter
+        if(!book.details[filter]) {
+
+          // Set variable to hide book
+          shouldBeHidden = true;
+
+          // Break out of loop
+          break;
+        }
+      }
+
+      // Get book id
+      const bookId = book.id;
+
+      // Find image element using attribute selector
+      const bookImage = document.querySelector(`.book__image[data-id="${bookId}"]`);
+
+      // Check if should be hidden
+      if (shouldBeHidden) {
+        bookImage.classList.add('hidden');
+      } else {
+        bookImage.classList.remove('hidden');
+      }
+    }
+  }
+
+  // Add event listener for checkbox change
+  form.addEventListener('click', function(event) {
+
+    if(event.target.tagName === 'INPUT' &&
+       event.target.type === 'checkbox' &&
+       event.target.name === 'filter') {
+
+      // Call filter books
+      filterBooks();
     }
   });
 
