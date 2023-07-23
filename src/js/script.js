@@ -8,15 +8,29 @@
       this.books = dataSource.books;
       this.filters = [];
       this.favoriteBooks = [];
-      this.bookTemplate = document.getElementById('template-book');
+
+      this.getElements();
+      this.filterBox();
+      this.render();
+    }
+
+    initData() {
+      this.books = dataSource.books;
+    }
+
+    getElements() {
+      this.bookTemplate = document.querySelector('#template-book');
+
       this.booksListEl = document.querySelector('.books-list');
       this.form = document.querySelector('.filters');
       this.template = Handlebars.compile(this.bookTemplate.innerHTML);
 
+      this.initData();
+
       this.initActions();
       this.filterBox();
-      this.render();
     }
+
 
     render() {
       this.booksListEl.innerHTML = '';
@@ -112,5 +126,7 @@
     }
   }
 
-  new BooksList();
+  const app = new BooksList();
+  app.render();
+  app.filterBooks();
 }
